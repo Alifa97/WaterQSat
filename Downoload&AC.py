@@ -205,9 +205,12 @@ if config_reader.getboolean('RUN','AC_section'):
         for row in tqdm(csv_reader, total=total_rows, unit=" SAFE folder"):
             # Get the full path to the SAFE folder from the CSV
             full_path_to_safe_folder = row[0]
-
-            # Build the command to run Sen2Cor
-            sen2cor_command = f"cd /d {sen2cor_path} && L2A_Process.bat {full_path_to_safe_folder}"
+            
+            if config_reader['AC']['operating_system'] == 'Linux':
+                sen2cor_command = f"{sen2cor_path}/bin/L2A_Process {full_path_to_safe_folder}"
+                
+            elif config_reader['AC']['operating_system'] == 'Windows':
+                sen2cor_command = f"cd /d {sen2cor_path} && L2A_Process.bat {full_path_to_safe_folder}"
 
             try:
                 # Run the command
