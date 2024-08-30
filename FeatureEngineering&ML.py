@@ -521,7 +521,7 @@ if config_reader.getboolean('RUN','ML'):
     trials = Trials()
 
     # Perform Bayesian Optimization to maximize R-squared by using fmin function
-    best = fmin(fn=objective, space=space, algo=tpe.suggest, max_evals=100, trials=trials)
+    best = fmin(fn=objective, space=space, algo=tpe.suggest, max_evals=int(config_reader['ML']['Opt_iterations']), trials=trials)
 
     # Get the best hyperparameters by using the indices of them
     best_xgb_params = {
